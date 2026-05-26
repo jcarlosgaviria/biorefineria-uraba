@@ -398,6 +398,7 @@ with st.sidebar:
         "⚙️  Optimizador MILP",
         "📊  Explorador Pareto",
         "🌱  Dinámica SD",
+        "🔬  Diagrama SD",
     ], label_visibility='collapsed')
 
     st.markdown("---")
