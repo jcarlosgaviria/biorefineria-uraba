@@ -735,7 +735,6 @@ elif '⚙️' in pagina:
                             title=dict(text='Producción por producto (Ton/año)', x=0,
                                        font=dict(family='Syne', size=13)),
                             xaxis=dict(title='', showgrid=True),
-                            yaxis=dict(title=''),
                         )
                         st.plotly_chart(fig_prod, use_container_width=True)
 
