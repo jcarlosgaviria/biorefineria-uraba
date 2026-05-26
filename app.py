@@ -398,7 +398,6 @@ with st.sidebar:
         "⚙️  Optimizador MILP",
         "📊  Explorador Pareto",
         "🌱  Dinámica SD",
-        "🔬  Diagrama SD",
     ], label_visibility='collapsed')
 
     st.markdown("---")
@@ -507,7 +506,6 @@ if '🏠' in pagina:
             height=320,
             title=dict(text='Perfil de Solución Compromiso', x=0.5,
                        font=dict(family='Syne', size=13, color='#F8FFF8')),
-            showlegend=True,
         )
         st.plotly_chart(fig_radar, use_container_width=True)
 
@@ -761,7 +759,6 @@ elif '⚙️' in pagina:
                         height=280,
                         title=dict(text='Distribución de empleo directo', x=0.5,
                                    font=dict(family='Syne', size=13)),
-                        showlegend=True,
                     )
                     st.plotly_chart(fig_emp, use_container_width=True)
         else:
