@@ -331,23 +331,48 @@ hr { border-color: rgba(76,175,80,0.2) !important; }
 </style>
 """, unsafe_allow_html=True)
 
-# ── Plotly template dark personalizado ───────────────────────────────
-PLOT_TEMPLATE = dict(
-    layout=dict(
+# ── Layout base para gráficos Plotly ─────────────────────────────────
+def layout_base(height=400, title_text='', title_x=0.5, title_size=15,
+                xaxis_title='', yaxis_title='', hovermode='closest',
+                showlegend=False):
+    """Genera layout dark mode sin conflictos de claves duplicadas."""
+    layout = dict(
         paper_bgcolor='rgba(6,14,8,0.0)',
         plot_bgcolor='rgba(10,31,14,0.4)',
         font=dict(family='DM Sans', color='#F8FFF8', size=12),
-        title=dict(font=dict(family='Syne', size=16, color='#F8FFF8')),
-        xaxis=dict(gridcolor='rgba(76,175,80,0.12)', linecolor='rgba(76,175,80,0.3)',
-                   tickfont=dict(color='#B0BEC5')),
-        yaxis=dict(gridcolor='rgba(76,175,80,0.12)', linecolor='rgba(76,175,80,0.3)',
-                   tickfont=dict(color='#B0BEC5')),
+        height=height,
+        margin=dict(l=40, r=20, t=50, b=40),
+        hovermode=hovermode,
+        showlegend=showlegend,
+        colorway=['#4CAF50','#00BCD4','#FFD700','#FF6D00','#FF5252','#CE93D8'],
         legend=dict(bgcolor='rgba(6,14,8,0.7)', bordercolor='rgba(76,175,80,0.3)',
                     borderwidth=1, font=dict(color='#F8FFF8')),
-        colorway=['#4CAF50','#00BCD4','#FFD700','#FF6D00','#FF5252','#CE93D8'],
-        margin=dict(l=40, r=20, t=50, b=40),
     )
-)
+    if title_text:
+        layout['title'] = dict(text=title_text, x=title_x,
+                                font=dict(family='Syne', size=title_size, color='#F8FFF8'))
+    if xaxis_title:
+        layout['xaxis'] = dict(title=xaxis_title,
+                                gridcolor='rgba(76,175,80,0.12)',
+                                linecolor='rgba(76,175,80,0.3)',
+                                tickfont=dict(color='#B0BEC5'))
+    else:
+        layout['xaxis'] = dict(gridcolor='rgba(76,175,80,0.12)',
+                                linecolor='rgba(76,175,80,0.3)',
+                                tickfont=dict(color='#B0BEC5'))
+    if yaxis_title:
+        layout['yaxis'] = dict(title=yaxis_title,
+                                gridcolor='rgba(76,175,80,0.12)',
+                                linecolor='rgba(76,175,80,0.3)',
+                                tickfont=dict(color='#B0BEC5'))
+    else:
+        layout['yaxis'] = dict(gridcolor='rgba(76,175,80,0.12)',
+                                linecolor='rgba(76,175,80,0.3)',
+                                tickfont=dict(color='#B0BEC5'))
+    return layout
+
+# Mantener compatibilidad con código existente
+PLOT_TEMPLATE = {'layout': layout_base()}
 
 # ── Paleta ────────────────────────────────────────────────────────────
 C = {
@@ -494,7 +519,12 @@ if '🏠' in pagina:
             fill='none', name='Utópico', showlegend=True,
         ))
         fig_radar.update_layout(
-            **PLOT_TEMPLATE['layout'],
+        paper_bgcolor='rgba(6,14,8,0.0)',
+        plot_bgcolor='rgba(10,31,14,0.4)',
+        font=dict(family='DM Sans', color='#F8FFF8', size=12),
+        margin=dict(l=40, r=20, t=50, b=40),
+        colorway=['#4CAF50','#00BCD4','#FFD700','#FF6D00','#FF5252','#CE93D8'],
+        legend=dict(bgcolor='rgba(6,14,8,0.7)', bordercolor='rgba(76,175,80,0.3)', borderwidth=1, font=dict(color='#F8FFF8')),
             polar=dict(
                 bgcolor='rgba(10,31,14,0.6)',
                 radialaxis=dict(visible=True, range=[0,1],
@@ -587,7 +617,12 @@ if '🏠' in pagina:
         )
     ))
     fig_sankey.update_layout(
-        **PLOT_TEMPLATE['layout'],
+        paper_bgcolor='rgba(6,14,8,0.0)',
+        plot_bgcolor='rgba(10,31,14,0.4)',
+        font=dict(family='DM Sans', color='#F8FFF8', size=12),
+        margin=dict(l=40, r=20, t=50, b=40),
+        colorway=['#4CAF50','#00BCD4','#FFD700','#FF6D00','#FF5252','#CE93D8'],
+        legend=dict(bgcolor='rgba(6,14,8,0.7)', bordercolor='rgba(76,175,80,0.3)', borderwidth=1, font=dict(color='#F8FFF8')),
         height=380,
         title=dict(text=f'Flujo biomasa · η={eta:.0%} · {q_gen/1e6:.2f}M Ton/año generada',
                    x=0.5, font=dict(family='Syne', size=14)),
@@ -727,7 +762,12 @@ elif '⚙️' in pagina:
                             textfont=dict(color='#B0BEC5', size=10, family='Space Mono'),
                         ))
                         fig_prod.update_layout(
-                            **PLOT_TEMPLATE['layout'],
+        paper_bgcolor='rgba(6,14,8,0.0)',
+        plot_bgcolor='rgba(10,31,14,0.4)',
+        font=dict(family='DM Sans', color='#F8FFF8', size=12),
+        margin=dict(l=40, r=20, t=50, b=40),
+        colorway=['#4CAF50','#00BCD4','#FFD700','#FF6D00','#FF5252','#CE93D8'],
+        legend=dict(bgcolor='rgba(6,14,8,0.7)', bordercolor='rgba(76,175,80,0.3)', borderwidth=1, font=dict(color='#F8FFF8')),
                             height=320,
                             title=dict(text='Producción por producto (Ton/año)', x=0,
                                        font=dict(family='Syne', size=13)),
@@ -755,7 +795,12 @@ elif '⚙️' in pagina:
                         font=dict(family='Syne', size=13, color='#FFD700'),
                     )
                     fig_emp.update_layout(
-                        **PLOT_TEMPLATE['layout'],
+        paper_bgcolor='rgba(6,14,8,0.0)',
+        plot_bgcolor='rgba(10,31,14,0.4)',
+        font=dict(family='DM Sans', color='#F8FFF8', size=12),
+        margin=dict(l=40, r=20, t=50, b=40),
+        colorway=['#4CAF50','#00BCD4','#FFD700','#FF6D00','#FF5252','#CE93D8'],
+        legend=dict(bgcolor='rgba(6,14,8,0.7)', bordercolor='rgba(76,175,80,0.3)', borderwidth=1, font=dict(color='#F8FFF8')),
                         height=280,
                         title=dict(text='Distribución de empleo directo', x=0.5,
                                    font=dict(family='Syne', size=13)),
@@ -878,7 +923,12 @@ elif '📊' in pagina:
                 ))
 
             fig_sc.update_layout(
-                **PLOT_TEMPLATE['layout'],
+        paper_bgcolor='rgba(6,14,8,0.0)',
+        plot_bgcolor='rgba(10,31,14,0.4)',
+        font=dict(family='DM Sans', color='#F8FFF8', size=12),
+        margin=dict(l=40, r=20, t=50, b=40),
+        colorway=['#4CAF50','#00BCD4','#FFD700','#FF6D00','#FF5252','#CE93D8'],
+        legend=dict(bgcolor='rgba(6,14,8,0.7)', bordercolor='rgba(76,175,80,0.3)', borderwidth=1, font=dict(color='#F8FFF8')),
                 height=380,
                 title=dict(text='FO1 vs FO2 — Frente de Pareto', x=0.5,
                            font=dict(family='Syne', size=14)),
@@ -925,7 +975,12 @@ elif '📊' in pagina:
                     rangefont=dict(color='#546E7A', size=8),
                 ))
                 fig_cp.update_layout(
-                    **PLOT_TEMPLATE['layout'],
+        paper_bgcolor='rgba(6,14,8,0.0)',
+        plot_bgcolor='rgba(10,31,14,0.4)',
+        font=dict(family='DM Sans', color='#F8FFF8', size=12),
+        margin=dict(l=40, r=20, t=50, b=40),
+        colorway=['#4CAF50','#00BCD4','#FFD700','#FF6D00','#FF5252','#CE93D8'],
+        legend=dict(bgcolor='rgba(6,14,8,0.7)', bordercolor='rgba(76,175,80,0.3)', borderwidth=1, font=dict(color='#F8FFF8')),
                     height=380,
                     title=dict(text='Coordenadas Paralelas (arriba=mejor)', x=0.5,
                                font=dict(family='Syne', size=14)),
@@ -989,7 +1044,12 @@ elif '🌱' in pagina:
                         fillcolor='rgba(76,175,80,0.05)' if i == 0 else None,
                     ))
             fig_sd.update_layout(
-                **PLOT_TEMPLATE['layout'],
+        paper_bgcolor='rgba(6,14,8,0.0)',
+        plot_bgcolor='rgba(10,31,14,0.4)',
+        font=dict(family='DM Sans', color='#F8FFF8', size=12),
+        margin=dict(l=40, r=20, t=50, b=40),
+        colorway=['#4CAF50','#00BCD4','#FFD700','#FF6D00','#FF5252','#CE93D8'],
+        legend=dict(bgcolor='rgba(6,14,8,0.7)', bordercolor='rgba(76,175,80,0.3)', borderwidth=1, font=dict(color='#F8FFF8')),
                 height=420,
                 title=dict(text='Variables del modelo SD (Vensim)', x=0.5,
                            font=dict(family='Syne', size=15)),
@@ -1038,7 +1098,12 @@ elif '🌱' in pagina:
     ), secondary_y=False)
 
     fig_sim.update_layout(
-        **PLOT_TEMPLATE['layout'],
+        paper_bgcolor='rgba(6,14,8,0.0)',
+        plot_bgcolor='rgba(10,31,14,0.4)',
+        font=dict(family='DM Sans', color='#F8FFF8', size=12),
+        margin=dict(l=40, r=20, t=50, b=40),
+        colorway=['#4CAF50','#00BCD4','#FFD700','#FF6D00','#FF5252','#CE93D8'],
+        legend=dict(bgcolor='rgba(6,14,8,0.7)', bordercolor='rgba(76,175,80,0.3)', borderwidth=1, font=dict(color='#F8FFF8')),
         height=420,
         title=dict(text=f'Dinámica SD — η={eta:.0%} · Superficie={sup:,} Ha',
                    x=0.5, font=dict(family='Syne', size=15)),
