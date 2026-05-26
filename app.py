@@ -508,7 +508,6 @@ if '🏠' in pagina:
             title=dict(text='Perfil de Solución Compromiso', x=0.5,
                        font=dict(family='Syne', size=13, color='#F8FFF8')),
             showlegend=True,
-            legend=dict(x=0.85, y=0.95),
         )
         st.plotly_chart(fig_radar, use_container_width=True)
 
